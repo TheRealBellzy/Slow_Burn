@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slow Burn - Neon Card Game</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    #cardContainer {
+      margin-top: 2rem;
+      padding: 1rem;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    img {
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+    button {
+      background-color: #9b5de5;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background-color: #7209b7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Slow Burn: Neon Card Game</h1>
+  <button onclick="drawCard()">Draw a Card</button>
+  <div id="cardContainer">
+    <img id="cardImage" src="" alt="Card Image" />
+    <p id="cardText"></p>
+  </div>
+
+  <script>
+    let cards = [];
+    let currentCard = 0;
+
+    async function initGame() {
+      const response = await fetch('Slow_Burn_Neon_Visual_Map.json');
+      cards = await response.json();
+    }
+
+    function drawCard() {
+      if (cards.length === 0) {
+        alert("Cards not loaded yet.");
+        return;
+      }
+
+      if (currentCard < cards.length) {
+        const card = cards[currentCard];
+        document.getElementById("cardText").innerText = card.card_text;
+        document.getElementById("cardImage").src = card.image_url;
+        currentCard++;
+      } else {
+        alert("No more cards.");
+      }
+    }
+
+    window.onload = initGame;
+  </script>
+</body>
+</html>
